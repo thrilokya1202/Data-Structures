@@ -1,0 +1,68 @@
+#include<stdio.h>
+int recursive_binarysearch(int [],int,int,int);
+void sort(int [],int);
+void display(int [],int);
+void main()
+{
+    int a[10],n,x,i,low=0,high,r;
+    printf("enter number of elements\n");
+    scanf("%d",&n);
+    high=n-1;
+    printf("enter elements\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("elements after sorted");
+    sort(a,n);
+    printf("enter element to search\n");
+    scanf("%d",&x);
+    r=recursive_binarysearch(a,low,high,x);
+    printf("position is %d",r);
+}
+void display(int a[10],int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("%d",a[i]);
+    }
+}
+void sort(int a[10],int n)
+{
+    int i,j,temp;
+    for(i=0;i<n-1;i++)
+    {
+        for(j=0;j<n-i-1;j++)
+        {
+            if(a[j]>a[j+1])
+            {
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+            }
+        }
+    }
+    display(a,n);
+}
+int recursive_binarysearch(int a[10],int low,int high,int x)
+{
+    int mid;
+    if(low<=high)
+    {
+         mid=(low+high)/2;
+    if(a[mid]==x)
+    {
+        return mid;
+    }
+    else if(a[mid]>x)
+    {
+        return recursive_binarysearch(a,low,mid-1,x);
+    }
+    else
+    {
+        return recursive_binarysearch(a,mid+1,high,x);
+    }
+    }
+    return -1;
+}
