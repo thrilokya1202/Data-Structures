@@ -1,0 +1,30 @@
+#include<stdio.h>
+struct node
+{
+    int ele;
+    struct node *next;
+};
+void main()
+{
+   struct node *a,*b,*c;
+   a=(struct node*)malloc(sizeof(struct node));
+   b=(struct node*)malloc(sizeof(struct node));
+   c=(struct node*)malloc(sizeof(struct node));
+   a->ele=10;
+   a->next=b;
+   b->ele=20;
+   b->next=c;
+   c->ele=30;
+   c->next=NULL;
+   printf("value of a %d\n",a->ele);
+   printf("value of b %d\n",b->ele);
+   printf("value of b %d\n",a->next->ele);
+   printf("value of c %d\n",c->ele);
+   printf("value of c %d\n",b->next->ele);
+   printf("value of c %d\n",a->next->next->ele);
+   printf("address of a %u\n",a);
+   printf("address of b %u\n",a->next);
+   printf("address of c %u\n",b->next);
+   printf("address of c %u\n",a->next->next);
+   
+}
