@@ -1,0 +1,67 @@
+#include<stdio.h>
+void display(int [],int);
+void sort(int [],int);
+int binary_search(int [],int ,int);
+void main()
+{
+    int i,a[10],n,x,r;
+    printf("enter number of elements\n");
+    scanf("%d",&n);
+    printf("enter elements\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("elements after sorted");
+    sort(a,n);
+    printf("enter element to be search\n");
+    scanf("%d",&x);
+    r=binary_search(a,n,x);
+    printf("position is %d",r);
+}
+int binary_search(int a[10],int n,int x)
+{
+    int low=0,mid,high=n-1,flag;
+    while(low<=high)
+    {
+        mid=(high+low)/2;
+        if(a[mid]==x)
+        {
+            return mid;
+        }
+        if(a[mid]>x)
+        {
+            high=mid-1;
+        }
+        else
+        {
+            low=mid+1;
+        }
+    }
+    return -1;
+}
+void sort(int a[10],int n)
+{
+    int i,j,temp;
+    for(i=0;i<n-1;i++)
+    {
+        for(j=0;j<n-i-1;j++)
+        {
+            if(a[j]>a[j+1])
+            {
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+            }
+        }
+    }
+    display(a,n);
+}
+void display(int a[10],int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("%d",a[i]);
+    }
+}
