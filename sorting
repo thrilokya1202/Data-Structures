@@ -1,0 +1,65 @@
+#include<stdio.h>
+void display(int [],int n);
+void selection_sort(int [],int);
+void insert_sort(int [],int n);
+void main()
+{
+    int a[10],n,i;
+    printf("enter number of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("elements before sorting\n");
+    display(a,n);
+    printf("elements after sorting through selection sort\n");
+    selection_sort(a,n);
+    display(a,n);
+    printf("elements after sorting through insertion sort\n");
+    insert_sort(a,n);
+     display(a,n);
+}
+void display(int a[10],int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("%d\t",a[i]);
+    }
+}
+void selection_sort(int a[10],int n)
+{
+    int i,min,temp,j;
+    for(i=0;i<n;i++)
+    {
+        min=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(a[min]>a[j])
+            {
+            min=j;
+            }
+        }
+        temp=a[i];
+        a[i]=a[min];
+        a[min]=temp;
+    }
+   
+}
+void insert_sort(int a[10],int n)
+{
+    int i,j,temp;
+    for(i=1;i<n;i++)
+    {
+        temp=a[i];
+        j=i;
+        while(j>0 && temp<a[j-1])
+        {
+            a[j]=a[j-1];
+            j--;
+        }
+        a[j]=temp;
+    }
+}
