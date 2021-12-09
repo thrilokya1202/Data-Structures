@@ -1,0 +1,115 @@
+#include<stdio.h>
+#include<malloc.h>
+# define MAX 50
+struct polynomial
+{
+        int highpower;
+        int coeff[MAX];
+};
+typedef struct polynomial poly;
+poly* create()
+{
+        int i;
+        poly *p;
+        p=(poly*)malloc(sizeof(poly));
+        printf("enter high power of polynomial");
+        scanf("%d",&p->highpower);
+        for(i=p->highpower;i>=0;i--)
+        {
+                printf("enter coefficient");
+                scanf("%d",&p->coeff[i]);
+        }
+        return p;
+}
+void display(poly *p)
+{
+        int i;
+        for(i=p->highpower;i>=0;i--)
+        {
+                printf("%dX^%d+",p->coeff[i],i);
+
+        }
+        printf("\n");
+}
+poly* add()
+{
+        poly *p1,*p2;
+        printf("enter first polynomial");
+        p1=create();
+        printf("enter second polynomial");
+        p2=create();
+        poly *p3=(poly*)malloc(sizeof(poly));
+        p3->highpower=max(p1->highpower,p2->highpower);
+        for(int i=p3->highpower;i>=0;i--)
+        {
+                p3->coeff[i]=p1->coeff[i]+p2->coeff[i];
+        }
+        return p3;
+}
+poly* sub()
+{
+        poly *p1,*p2;
+        printf("enter first polynomial");
+        p1=create();
+        printf("enter second polynomial");
+        p2=create();
+        poly *p3=(poly*)malloc(sizeof(poly));
+        p3->highpower=max(p1->highpower,p2->highpower);
+        for(int i=p3->highpower;i>=0;i--)
+        {
+                p3->coeff[i]=p1->coeff[i]-p2->coeff[i];
+        }
+        return p3;
+}
+poly* mul()
+{
+        poly *p1,*p2,*p3;
+        printf("enter first polynomial");
+        p1=create();
+        printf("enter second polynomial");
+        p2=create();
+        p3=(poly*)malloc(sizeof(poly));
+        p3->highpower=p1->highpower+p2->highpower;
+        for(int i=p1->highpower;i>=0;i--)
+        {
+                for(int j=p2->highpower;j>=0;j--)
+                {
+                        p3->coeff[i+j]=p3->coeff[i+j]+p1->coeff[i]*p2->coeff[j];
+                }
+        }
+        return p3;
+}
+
+int max(int a,int b)
+{
+        int c=(a>b)?a:b;
+        return c;
+}
+void main()
+{
+        int choice;
+        poly *p1,*p2,*p3,*p4,*p5;
+        while(1)
+        {
+          printf("\n 1.create\n 2.display\n 3.addition\n 4.subtraction \n 5.multiplication\n 6.exit");
+          printf("enter your choice");
+          scanf("%d",&choice);
+                switch(choice)
+                {
+                        case 1:p1=create();
+                               break;
+                        case 2:display(p1);
+                               break;
+                        case 3:p3=add();
+                               display(p3);
+                               break;
+                        case 4:p4=sub();
+                               display(p4);
+                               break;
+                        case 5:p5=mul();
+                               display(p5);
+                               break;
+                        case 6:exit(0);
+                }
+        }
+}
