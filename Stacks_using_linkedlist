@@ -1,0 +1,102 @@
+//STACK USING LINKED LIST
+#include<stdio.h>
+#include<stdlib.h>
+struct stack
+{
+    int data;
+    struct stack *next;
+};
+typedef struct stack node;
+node *top=NULL;
+void push(int x)
+{
+    node *new;
+    new=(node*)malloc(sizeof(node));
+    new->data=x;
+    new->next=NULL;
+    if(top==NULL)
+    {
+        top=new;
+    }
+    else
+    {
+        new->next=top;
+        top=new;
+    }
+}
+int pop()
+{
+    int x;
+    node *temp;
+    if(top==NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        x=top->data;
+        temp=top;
+        top=top->next;
+        free(temp);
+        return x;
+    }
+}
+void display()
+{
+    node *temp=top;
+    if(top==NULL)
+    {
+        printf("no elements in stack");
+    }
+    else
+    {
+        while(temp!=NULL)
+        {
+            printf("|%d|->",temp->data);
+            temp=temp->next;
+        }
+    }
+    printf("NULL");
+    printf("\n");
+}
+int peek()
+{
+    return top->data;
+}
+void main()
+{
+    int ch,x,d,p;
+    while(1)
+    {
+        printf("1.push\n2.pop\n3.peek\n4.display\n5.quit\n");
+        printf("enter your choice\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:printf("enter element to push\n");
+                   scanf("%d",&x);
+                   push(x);
+                   break;
+            case 2:d=pop();
+                   if(d==-1)
+                   {
+                       printf("stack underflow");
+                   }
+                   else
+                   {
+                       printf("%d is popped\n",d);
+                   }
+                   break;
+            case 3:p=peek();
+                   printf("peek element is %d\n",p);
+                   break;
+            case 4:printf("elements in stack are\n");
+                   display();
+                   break;
+            case 5:exit(0);
+                   
+        }
+       
+    }
+   
+}
