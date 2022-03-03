@@ -1,0 +1,235 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+struct avl
+{
+        int data,ht;
+        struct avl *left;
+        struct avl *right;
+};
+typedef struct avl node;
+node* single_ll(node *k2)
+{
+        node *k1=k2->left;
+        k2->left=k1->right;
+        k1->right=k2;
+        return k1;
+}
+node* single_rr(node *k2)
+{
+        node *k1=k2->right;
+        k2->right=k1->left;
+        k1->left=k2;
+        return k1;
+}
+node* double_lr(node *k)
+{
+        k->left=single_rr(k->left);
+        return single_ll(k);
+}
+node* double_rl(node *k)
+{
+        k->right=single_ll(k->right);
+        return single_rr(k);
+}
+int max(int a,int b)
+{
+        return (a>b)?a:b;
+}
+int height(node *p)
+{
+        if(p==NULL)
+        {
+                return -1;
+        }
+        else
+        {
+                return max(height(p->left),height(p->right))+1;
+        }
+}
+node* insert(node *p,int x)
+{
+        node *new;
+        if(p==NULL)
+        {
+                new=(node*)malloc(sizeof(node));
+                new->data=x;
+                new->left=NULL;
+                new->right=NULL;
+                new->ht=0;
+                p=new;
+        }
+        else if(x<p->data)
+        {
+                p->left=insert(p->left,x);
+                if(abs(height(p->left)-height(p->right))==2)
+                {
+                        if(x<p->left->data)
+                        {
+                                p=single_ll(p);
+                        }
+                        else
+                        {
+                                p=double_lr(p);
+                        }
+                }
+        }
+        else if(x>p->data)
+        {
+                p->right=insert(p->right,x);
+                if(abs(height(p->left)-height(p->right))==2)
+                {
+                        if(x>p->right->data)
+                        {
+                                p=single_rr(p);
+                        }
+                        else
+                        {
+                                p=double_rl(p);
+                        }
+                }
+        }
+        p->ht=max(height(p->left),height(p->right));
+        return p;
+}
+void inorder(node *p)
+{
+        if(p!=NULL)
+        {
+                inorder(p->left);
+                printf("%d\n",p->data);
+                inorder(p->right);
+        }
+}
+void preorder(node *p)
+{
+        if(p!=NULL)
+        {
+                printf("%d\n",p->data);
+                preorder(p->left);
+                preorder(p->right);
+        }
+}
+void postorder(node *p)
+{
+        if(p!=NULL)
+        {
+                postorder(p->left);
+                postorder(p->right);
+                printf("%d\n",p->data);
+        }
+}
+node* search(node *p,int x)
+{
+        if(p==NULL)
+        {
+                return p;
+        }
+        else if(x<p->data)
+        {
+                return search(p->left,x);
+        }
+        else if(x>p->data)
+        {
+                return search(p->right,x);
+        }
+        else
+        {
+                return p;
+        }
+}
+node* findmax(node *p)
+{
+        node *temp=p;
+        while(temp->right!=NULL)
+        {
+                temp=temp->right;
+        }
+        return temp;
+}
+node* findmin(node *p)
+{
+        node *temp=p;
+        while(temp->left!=NULL)
+        {
+                temp=temp->left;
+        }
+        return temp;
+}
+node* delete(node *p,int x)
+{
+        node *temp;
+        if(p==NULL)
+        {
+                return p;
+        }
+        else if(x<p->data)
+        {
+                p->left=delete(p->left,x);
+        }
+                p->right=delete(p->right,x);
+        }
+        else if(p->left!=NULL &&p->right!=NULL)
+                p->right=delete(p->right,x);
+        }
+        else
+        {
+                temp=p;
+                if(p->left==NULL)
+                {
+                        p=p->right;
+                }
+                else if(p->right==NULL)
+                {
+                        p=p->left;
+                }
+        }
+        return p;
+}
+void main()
+{
+        int ch,i,s,d;
+        node *root=NULL,*temp;
+        while(1)
+        {
+                printf("enter your choice");
+                scanf("%d",&ch);
+                switch(ch)
+                {
+                       case 1:printf("enter element to insert");                                    
+                               scanf("%d",&i);
+                               root=insert(root,i);
+                               break;
+                        case 2:inorder(root);
+                               break;
+                        case 3:preorder(root);
+                               break;
+                        case 4:postorder(root);
+                               break;
+                        case 5:temp=findmin(root);
+                               printf("minimum element of tree is %d",temp->data);
+                               break;
+                        case 6:temp=findmax(root);
+                               printf("maximum element of tree is %d",temp->data);
+                               break;
+                        case 7:printf("enter element to search");
+                               scanf("%d",&s);
+                               temp=search(root,s);
+                               if(temp==NULL)
+                               {
+                                       printf("element %d found",s);
+                               }
+                               else
+                               {
+                                       printf("element %d found",s);
+                               }
+                               break;
+                        case 8:printf("enter element to delete");
+                               scanf("%d",&d);
+                               root=delete(root,d);
+                               break;
+                        case 9:exit(0);
+                }
+        }
+}
+
